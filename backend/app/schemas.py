@@ -126,16 +126,16 @@ class MetmastEntry(BaseModel):
     field_7: str | None = None  # 测风状态
 
 class CollectorEntry(BaseModel):
-    """集电线路明细结构。"""
+    """集电线路明细结构（展示口径见 services.collector：起止杆塔、线路长度统一格式化）。"""
 
     field_0: str | None = None  # 线路编号
     field_1: str | None = None  # 电压等级
-    field_2: str | None = None  # 起止杆塔
-    field_3: str | None = None  # 线路长度
-    field_4: str | None = None  # 所属场站
-    field_5: str | None = None  # 上次巡视日
-    field_6: str | None = None  # 缺陷数量
-    field_7: str | None = None  # 线路状态
+    field_2: str | None = None  # 所属场站
+    field_3: str | None = None  # 起始杆塔
+    field_4: str | None = None  # 终止杆塔
+    field_5: str | None = None  # 线路长度（公里）
+    field_6: str | None = None  # 所属班组
+    field_7: str | None = None  # 责任人
 
 class SubstationEntry(BaseModel):
     """升压站明细结构。"""

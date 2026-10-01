@@ -28,6 +28,9 @@ class Store:
         return None
 
     def overview(self) -> dict[str, object]:
+        # 集电线路的状态以最近一次巡视结论为准；汇总前先对账，
+        # 保证运营概览的待处理量与集电线路台账「待巡视线段」完全同口径。
+        self._reconcile_collector()
         modules: list[dict[str, object]] = []
         for name in self.module_names():
             rows = self.rows(name)
@@ -44,6 +47,12 @@ class Store:
             {"label": "异常量", "value": sum(int(item["abnormal"]) for item in modules)},
         ]
         return {"cards": cards, "modules": modules}
+
+    def _reconcile_collector(self) -> None:
+        """触发集电线路状态对账（延迟导入避免与服务层循环依赖）。"""
+        from app.services.collector import CollectorService
+
+        CollectorService().reconcile_all()
 
 
 store = Store()
